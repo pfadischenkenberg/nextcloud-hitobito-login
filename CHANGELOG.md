@@ -7,13 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-
-- Settings service
-- Option to set Hitobito as default login
-- Documentation of redirect-url
-- Documentation clarifying the non-affiliation with Puzzle ITC
-
 ## [1.0.1] - 2025-06-05
 
 ### Added
