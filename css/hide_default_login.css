@@ -1,6 +1,7 @@
 
-#body-login form,
-#body-login form ~ * {
+/* Only hide login forms, not OAuth authorization forms */
+#body-login form:not([data-login-form]):not([name]):not([id]),
+#body-login form[action*="login"]:not([name="challenge"]) {
   display: none;
 }
 

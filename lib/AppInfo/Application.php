@@ -43,8 +43,16 @@ class Application extends App implements IBootstrap {
 				return;
 			}
 
-			Util::addStyle(self::APP_ID, 'hitobitologin.hidepasswordform');
-			Util::addStyle(self::APP_ID, 'hide_default_login');
+			// Only load CSS on settings pages, not on login or OAuth flow pages
+			$requestUri = $_SERVER['REQUEST_URI'] ?? '';
+			$scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+			
+			// Check if we're on a settings page (not login pages)
+			if (strpos($requestUri, '/settings/') !== false || 
+			    (strpos($scriptName, '/settings/') !== false)) {
+				Util::addStyle(self::APP_ID, 'hitobitologin.hidepasswordform');
+				Util::addStyle(self::APP_ID, 'hide_default_login');
+			}
 		}
 	}
 }

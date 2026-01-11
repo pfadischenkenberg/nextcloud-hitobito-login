@@ -111,11 +111,20 @@ class LoginController extends Controller {
 	}
 
 	private function getRedirectResponse(?string $redirectUrl = null): RedirectResponse {
-		return new RedirectResponse(
-			$redirectUrl === null
-				? $this->urlGenerator->getBaseUrl()
-				: preg_replace('/^https?:\/\/[^\/]+/', '', $redirectUrl)
-		);
+		if ($redirectUrl === null) {
+			return new RedirectResponse($this->urlGenerator->getBaseUrl());
+		}
+		
+		// Parse the URL to preserve query parameters
+		$parsedUrl = parse_url($redirectUrl);
+		$path = $parsedUrl['path'] ?? '/';
+		
+		// Preserve query parameters if they exist
+		if (isset($parsedUrl['query'])) {
+			$path .= '?' . $parsedUrl['query'];
+		}
+		
+		return new RedirectResponse($path);
 	}
 
 	#[FrontpageRoute(verb: 'GET', url: '/login/oauth')]
