@@ -1,26 +1,37 @@
 
-/* Only hide login forms, not OAuth authorization forms */
+/* ── Push the login box a bit down so it doesn't overlap the logo ─────────── */
+.guest-box.login-box {
+  margin-top: 3rem;
+}
+
+/* ── Hide the standard username/password login form by default ────────────── */
+/* Hides the main LoginForm. Excludes OAuth challenge forms (name="challenge")  */
+/* and forms that have an id or name (other app forms).                         */
 #body-login form:not([data-login-form]):not([name]):not([id]),
 #body-login form[action*="login"]:not([name="challenge"]) {
   display: none;
 }
 
-#body-login .alternative-login {
+/* Support both Nextcloud class names (singular = legacy, plural = NC 29+) */
+#body-login .alternative-login,
+#body-login .alternative-logins {
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
 
-#body-login a[href='#body-login'] {
-  margin: 1em auto 0 auto;
-  width: 100%;
-  max-width: 400px;
+/* ── Show the form + known elements when URL fragment is #body-login ───────── */
+/* Only target specific elements to avoid accidentally showing unrelated links  */
+/* (e.g. a "Registrieren" link) that live nearby in the DOM.                   */
+#body-login:target form,
+#body-login:target #lost-password,
+#body-login:target .login-additional,
+#body-login:target .lost-password-container {
+  display: block !important;
 }
 
-#body-login:target form,
-#body-login:target form ~ * {
-  display: inherit;
-}
-#body-login:target a[href='#body-login'] {
-  display: none;
+/* Hide the "Mit Benutzername & Passwort" button once the form is visible */
+#body-login:target a[href='#body-login'],
+#body-login:target .button-vue[href='#body-login'] {
+  display: none !important;
 }
